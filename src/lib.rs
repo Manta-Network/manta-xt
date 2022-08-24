@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Manta.  If not, see <http://www.gnu.org/licenses/>.
 
-use subxt::extrinsic::{BaseExtrinsicParams, PlainTip};
+use subxt::config::{SubstrateConfig, WithExtrinsicParams};
 use subxt::subxt;
+use subxt::tx::{BaseExtrinsicParams, PlainTip};
 
 pub mod utils;
 
@@ -32,3 +33,4 @@ pub mod calamari_runtime {}
 pub mod dolphin_runtime {}
 
 pub type MantaExtrinsicParams<T> = BaseExtrinsicParams<T, PlainTip>;
+pub type MantaConfig = WithExtrinsicParams<SubstrateConfig, MantaExtrinsicParams<SubstrateConfig>>;
