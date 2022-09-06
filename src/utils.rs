@@ -142,4 +142,19 @@ mod tests {
         let proposal = api.storage().fetch(&proposal, None).await.unwrap();
         dbg!(proposal);
     }
+
+    #[tokio::test]
+    async fn get_manta_pay_storage_should_work() {
+        let url = "wss://ws.rococo.dolphin.engineering:443";
+        let api = create_manta_client::<MantaConfig>(url)
+            .await
+            .expect("Failed to create client.");
+
+        let addr = crate::dolphin_runtime::storage().manta_pay().shards_root();
+
+        let mut iter = api.storage().iter(addr, 10, None).await.unwrap();
+        while let Some((key, val)) = iter.next().await.unwrap() {
+            println!("Key: 0x{}. {:?}", hex::encode(&key), val);
+        }
+    }
 }
