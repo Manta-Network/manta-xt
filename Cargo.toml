@@ -1,6 +1,6 @@
 [package]
 name = "manta-xt"
-version = "3.3.0"
+version = "3.4.3"
 edition = "2021"
 homepage = 'https://manta.network'
 license = 'GPL-3.0'

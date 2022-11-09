@@ -21,6 +21,8 @@ use subxt::tx::{BaseExtrinsicParams, PlainTip};
 pub mod utils;
 
 pub use subxt::*;
+pub use sp_core::*;
+pub use sp_runtime::*;
 
 /// Manta runtime APIs
 #[subxt(runtime_metadata_path = "metadata/manta.scale")]
