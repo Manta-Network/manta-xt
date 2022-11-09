@@ -8,10 +8,10 @@ description = "Submit extrinsics (transactions) to a manta node via RPC"
 
 [dependencies]
 anyhow = "1.0.58"
-codec = { package = 'parity-scale-codec', version = '3.1.5' }
+codec = { package = "parity-scale-codec", version = "3.2.1" }
 hex = "0.4.3"
 log = "0.4.17"
 sp-core = { version = "6.0.0", default-features = false }
 sp-runtime = { version = "6.0.0", default-features = false }
-subxt = "0.23"
-tokio = { version = "1.20.1", features = ["rt", "macros"] }
+subxt = "0.24"
+tokio = { version = "1.21.2", features = ["rt", "macros"] }
