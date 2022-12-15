@@ -57,7 +57,6 @@ mod tests {
     use super::*;
     use crate::MantaConfig;
     use sp_core::{crypto::Pair, crypto::Ss58Codec, sr25519, H256};
-    use std::str::FromStr;
 
     #[test]
     fn create_signer_from_seed_should_work() {
@@ -129,18 +128,12 @@ mod tests {
             .expect("Failed to create client.");
 
         let proposals = crate::calamari_runtime::storage().council().proposals();
-        let proposals = api.storage().fetch(&proposals, None).await.unwrap();
-        dbg!(proposals);
-
-        let proposal_hash =
-            H256::from_str("0x77a01b6ab263280e43f50c795610b10a2ee61456b01682413f2a5b4df5143592")
-                .unwrap();
+        let proposals = api.storage().fetch(&proposals, None).await.unwrap().unwrap().0[0];
         let proposal = crate::calamari_runtime::storage()
             .council()
-            .proposal_of(&proposal_hash);
+            .proposal_of(&proposals);
 
         let proposal = api.storage().fetch(&proposal, None).await.unwrap();
-        dbg!(proposal);
     }
 
     #[tokio::test]
