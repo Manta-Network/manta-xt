@@ -1,4 +1,4 @@
-// Copyright 2020-2022 Manta Network.
+// Copyright 2020-2023 Manta Network.
 // This file is part of Manta.
 //
 // Manta is free software: you can redistribute it and/or modify
@@ -16,10 +16,7 @@
 
 use anyhow::Result;
 use sp_core::{crypto::Pair, crypto::Ss58Codec, sr25519};
-use sp_runtime::{
-    traits::{IdentifyAccount, Verify},
-    AccountId32,
-};
+use sp_runtime::{traits::Verify, AccountId32};
 use subxt::{tx::PairSigner, Config, OnlineClient};
 
 /// Create client
@@ -40,11 +37,10 @@ pub fn to_account_id(address: &str) -> Result<AccountId32> {
 pub fn create_signer_from_string<T, P>(seed: &str) -> Result<PairSigner<T, P>>
 where
     T: Config,
-    T::Signature: From<P::Signature>,
-    <T::Signature as Verify>::Signer: From<P::Public> + IdentifyAccount<AccountId = T::AccountId>,
     P: Pair,
-    P::Signature: From<sr25519::Signature>,
     P::Public: From<sr25519::Public>,
+    <sp_runtime::MultiSignature as Verify>::Signer: From<P::Public>,
+    T::AccountId: From<sp_runtime::AccountId32>,
 {
     let signer_pair = P::from_string(seed.as_ref(), None).unwrap();
     let signer = PairSigner::<T, P>::new(signer_pair);
@@ -70,7 +66,7 @@ mod tests {
 
     #[tokio::test]
     async fn transfer_balances() {
-        let url = "ws://127.0.0.1:9800";
+        let url = "ws://127.0.0.1:9988";
         let api = create_manta_client::<MantaConfig>(url)
             .await
             .expect("Failed to create client.");
@@ -128,12 +124,28 @@ mod tests {
             .expect("Failed to create client.");
 
         let proposals = crate::calamari_runtime::storage().council().proposals();
-        let proposals = api.storage().fetch(&proposals, None).await.unwrap().unwrap().0[0];
+        let proposals = api
+            .storage()
+            .at(None)
+            .await
+            .unwrap()
+            .fetch(&proposals)
+            .await
+            .unwrap()
+            .unwrap()
+            .0[0];
         let proposal = crate::calamari_runtime::storage()
             .council()
             .proposal_of(&proposals);
 
-        let proposal = api.storage().fetch(&proposal, None).await.unwrap();
+        let proposal = api
+            .storage()
+            .at(None)
+            .await
+            .unwrap()
+            .fetch(&proposal)
+            .await
+            .unwrap();
     }
 
     #[tokio::test]
@@ -145,7 +157,14 @@ mod tests {
 
         let addr = crate::dolphin_runtime::storage().manta_pay().shards_root();
 
-        let mut iter = api.storage().iter(addr, 10, None).await.unwrap();
+        let mut iter = api
+            .storage()
+            .at(None)
+            .await
+            .unwrap()
+            .iter(addr, 10)
+            .await
+            .unwrap();
         while let Some((key, val)) = iter.next().await.unwrap() {
             println!("Key: 0x{}. {:?}", hex::encode(&key), val);
         }

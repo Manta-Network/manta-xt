@@ -11,7 +11,7 @@ anyhow = "1.0.58"
 codec = { package = "parity-scale-codec", version = "3.2.1" }
 hex = "0.4.3"
 log = "0.4.17"
-sp-core = { version = "6.0.0", default-features = false }
-sp-runtime = { version = "6.0.0", default-features = false }
-subxt = "0.24"
-tokio = { version = "1.22", features = ["rt", "macros"] }
+sp-core = { version = "16.0.0", default-features = false }
+sp-runtime = { version = "18.0.0", default-features = false }
+subxt = "0.27.1"
+tokio = { version = "1.25", features = ["rt", "macros"] }
