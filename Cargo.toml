@@ -1,9 +1,9 @@
 [package]
 name = "manta-xt"
-version = "3.4.3"
+version = "4.0.0"
 edition = "2021"
-homepage = 'https://manta.network'
-license = 'GPL-3.0'
+homepage = "https://manta.network"
+license = "GPL-3.0"
 description = "Submit extrinsics (transactions) to a manta node via RPC"
 
 [dependencies]
@@ -11,7 +11,7 @@ anyhow = "1.0.58"
 codec = { package = "parity-scale-codec", version = "3.2.1" }
 hex = "0.4.3"
 log = "0.4.17"
-sp-core = { version = "6.0.0", default-features = false }
-sp-runtime = { version = "6.0.0", default-features = false }
-subxt = "0.24"
-tokio = { version = "1.21.2", features = ["rt", "macros"] }
+sp-core = { version = "16.0.0", default-features = false }
+sp-runtime = { version = "18.0.0", default-features = false }
+subxt = "0.27.1"
+tokio = { version = "1.25", features = ["rt", "macros"] }

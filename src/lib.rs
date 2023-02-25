@@ -1,4 +1,4 @@
-// Copyright 2020-2022 Manta Network.
+// Copyright 2020-2023 Manta Network.
 // This file is part of Manta.
 //
 // Manta is free software: you can redistribute it and/or modify
@@ -14,15 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Manta.  If not, see <http://www.gnu.org/licenses/>.
 
+use subxt::config::extrinsic_params::BaseExtrinsicParams;
+use subxt::config::polkadot::PlainTip;
 use subxt::config::{SubstrateConfig, WithExtrinsicParams};
 use subxt::subxt;
-use subxt::tx::{BaseExtrinsicParams, PlainTip};
 
 pub mod utils;
 
-pub use subxt::*;
 pub use sp_core::*;
 pub use sp_runtime::*;
+pub use subxt::*;
 
 /// Manta runtime APIs
 #[subxt(runtime_metadata_path = "metadata/manta.scale")]
